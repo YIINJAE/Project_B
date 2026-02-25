@@ -1,6 +1,7 @@
 # Agent Status Board
 
 ## Agent 1
+- STARTED (2026-02-25): Issue #6 `apps/web` 공통 GNB/FNB 레이아웃 작업 시작. 계획 파일: `apps/web/app/layout.js`, `apps/web/app/globals.css`, `docs/agent-status.md`. 리스크: 네비 토글 인터랙션은 범위 외(`app.js`)라 구조/접근성 스켈레톤 중심으로 구현.
 - STARTED (2026-02-25): `index.html` 패션/에디토리얼 MVP 구조 작업 시작. 계획 파일: `index.html`, `docs/agent-status.md`. 리스크: 스타일/스크립트 미완성 상태에서 훅(id/class/data-category)만 선반영.
 - DONE (2026-02-25): commit `bac9c92`. 검증: hero/collections/editorial/craftsmanship/contact 섹션, 모바일 내비 토글 스켈레톤(`id=\"mobile-nav-toggle\"`, `aria-controls=\"primary-nav\"`), CSS/JS 훅(id/class/data-category) 포함 확인. 인계: 스타일/인터랙션은 Agent 2/3 연동 필요.
 - STARTED (2026-02-25): 문서화 작업(`PRD.md`, `IA.md`) 시작. 소스 기준: `docs/웹사이트 개발 구성계획서.md`, `docs/개발계획서-TODO-스케줄.md`. 리스크: 소스 문서가 현재 worktree에 없어 상위 저장소 원본을 참조해 동기화 필요.
