@@ -3,8 +3,22 @@ import { Badge, Button, Card, Input, Section } from "@/components/ui";
 import { categories, filterAndSortProducts, formatPrice, products } from "@/lib/catalog";
 
 export const metadata = {
-  title: "Shop | Project B",
-  description: "Category, search and sorting flow for Week2 shop list MVP."
+  title: "Shop",
+  description: "Browse the full Project B catalog with category and sorting filters.",
+  alternates: {
+    canonical: "/shop"
+  },
+  openGraph: {
+    title: "Project B Shop",
+    description: "Browse the full Project B catalog with category and sorting filters.",
+    url: "/shop",
+    type: "website"
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Project B Shop",
+    description: "Browse the full Project B catalog with category and sorting filters."
+  }
 };
 
 function buildQuery(current, patch) {

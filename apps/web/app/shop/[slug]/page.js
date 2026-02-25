@@ -7,11 +7,46 @@ export function generateMetadata({ params }) {
     return p.slug === params.slug;
   });
   if (!item) {
-    return { title: "Product Not Found | Project B" };
+    return {
+      title: "Product Not Found",
+      description: "The requested product could not be found in the Project B catalog.",
+      alternates: {
+        canonical: "/shop"
+      },
+      robots: {
+        index: false,
+        follow: true
+      },
+      openGraph: {
+        title: "Product Not Found | Project B",
+        description: "The requested product could not be found in the Project B catalog.",
+        url: "/shop",
+        type: "website"
+      },
+      twitter: {
+        card: "summary",
+        title: "Product Not Found | Project B",
+        description: "The requested product could not be found in the Project B catalog."
+      }
+    };
   }
   return {
-    title: item.name + " | Project B",
-    description: item.description
+    title: item.name,
+    description: item.description,
+    alternates: {
+      canonical: "/shop/" + item.slug
+    },
+    openGraph: {
+      title: item.name + " | Project B",
+      description: item.description,
+      url: "/shop/" + item.slug,
+      type: "article"
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: item.name + " | Project B",
+      description: item.description
+    }
   };
 }
 

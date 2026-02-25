@@ -1,8 +1,28 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Project B Web",
-  description: "Shared global navigation and footer layout"
+  metadataBase: new URL("https://project-b.example"),
+  title: {
+    default: "Project B Web",
+    template: "%s | Project B"
+  },
+  description: "Curated fashion storefront with editorial storytelling and seasonal picks.",
+  alternates: {
+    canonical: "/"
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "/",
+    siteName: "Project B",
+    title: "Project B Web",
+    description: "Curated fashion storefront with editorial storytelling and seasonal picks."
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Project B Web",
+    description: "Curated fashion storefront with editorial storytelling and seasonal picks."
+  }
 };
 
 export default function RootLayout({ children }) {
