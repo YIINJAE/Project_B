@@ -41,3 +41,6 @@
 - STARTED (2026-02-25): Issue #25 SEO metadata/OG for `apps/web` pages.
   Planned files: `apps/web/app/layout.js`, `apps/web/app/page.js`, `apps/web/app/shop/page.js`, `apps/web/app/shop/[slug]/page.js`, `apps/web/app/not-found.js`, `docs/agent-status.md`.
   Risks: Keep canonical/base metadata compatible with local/dev environments while avoiding hardcoded external production domains.
+- DONE (2026-02-25): Issue #25 commit `3fbb390eb89164760a784ed27eeabe5c72c3dc14`.
+  Verification: `git diff --check` clean, `node --check` passed for updated app route files, metadata now includes layout-level `metadataBase` + canonical and page-level OG/Twitter/dynamic product metadata/not-found metadata; `cd apps/web && npm run lint` failed in this environment with `next: not found` (dependency missing).
+  Handoff: Placeholder base domain uses `https://project-b.example`; replace with deployment domain/env-driven value during release wiring.
