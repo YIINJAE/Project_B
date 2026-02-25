@@ -483,6 +483,14 @@ a {
   padding: 0;
 }
 
+.detail-options .product-price {
+  margin: 0;
+}
+
+.detail-options .stock-state {
+  margin: var(--space-1) 0 var(--space-4);
+}
+
 .detail-options legend {
   margin-bottom: var(--space-2);
   font-weight: 700;

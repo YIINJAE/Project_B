@@ -14,41 +14,37 @@ var sizeSets = [
   ["28", "30", "32", "34"]
 ];
 
-function buildOptionVariants(sizeOptions, colors, seq, soldOut) {
-  var variants = [];
-
-  sizeOptions.forEach(function (size, sizeIndex) {
+function buildVariantMatrix(seq, sizeOptions, colors, isSoldOut) {
+  return sizeOptions.reduce(function (acc, size, sizeIndex) {
     colors.forEach(function (color, colorIndex) {
-      var priceDelta = (sizeIndex - 1) * 1500 + colorIndex * 500;
-      var stockSeed = seq + (sizeIndex + 1) * 7 + (colorIndex + 1) * 13;
-      var stock = soldOut ? 0 : stockSeed % 6;
-
-      variants.push({
+      var key = size + "::" + color.name;
+      var stock = isSoldOut ? 0 : (seq + sizeIndex * 2 + colorIndex * 3) % 5;
+      var priceDelta = sizeIndex * 1200 + colorIndex * 400;
+      acc[key] = {
         size: size,
         color: color.name,
-        priceDelta: priceDelta,
-        stock: stock
-      });
+        stock: stock,
+        priceDelta: priceDelta
+      };
     });
+    return acc;
+  }, {});
+}
+
+function matrixToList(matrix) {
+  return Object.keys(matrix || {}).map(function (key) {
+    return matrix[key];
   });
-
-  if (!soldOut && variants.length > 0 && variants.every(function (variant) { return variant.stock === 0; })) {
-    variants[0].stock = 2;
-  }
-
-  return variants;
 }
 
 export var products = Array.from({ length: 30 }, function (_, index) {
   var seq = index + 1;
   var category = categories[(seq % (categories.length - 1)) + 1];
   var paletteOffset = seq % palette.length;
-  var soldOut = seq % 7 === 0;
   var colors = [0, 1, 2].map(function (step) {
     return palette[(paletteOffset + step) % palette.length];
   });
   var sizeOptions = sizeSets[seq % sizeSets.length];
-  var variants = buildOptionVariants(sizeOptions, colors, seq, soldOut);
   var imageCount = 4;
   var images = Array.from({ length: imageCount }, function (_unused, imageIndex) {
     return {
@@ -56,19 +52,21 @@ export var products = Array.from({ length: 30 }, function (_, index) {
       alt: "Detail view " + String(imageIndex + 1) + " of Item " + String(seq).padStart(2, "0")
     };
   });
+  var isSoldOut = seq % 7 === 0;
+  var variantMatrix = buildVariantMatrix(seq, sizeOptions, colors, isSoldOut);
+
   return {
     slug: "item-" + String(seq).padStart(2, "0"),
     name: "Item " + String(seq).padStart(2, "0"),
     category: category,
     price: 39000 + index * 3000,
-    soldOut: soldOut,
+    soldOut: isSoldOut,
     description: "Week2 dummy product for shop/detail flow",
     images: images,
-    variants: variants,
     options: {
       sizes: sizeOptions,
       colors: colors,
-      variants: variants
+      variants: variantMatrix
     },
     fitNote: "Relaxed silhouette with room through chest and shoulder.",
     material: seq % 2 === 0 ? "Cotton-nylon blend shell" : "Washed cotton twill",
@@ -81,27 +79,22 @@ export function formatPrice(value) {
 }
 
 export function getDefaultVariant(product) {
-  var variants = product?.variants || product?.options?.variants || [];
-  if (!variants.length) return null;
-
+  var list = matrixToList(product?.options?.variants);
+  if (!list.length) return null;
   return (
-    variants.find(function (variant) {
+    list.find(function (variant) {
       return variant.stock > 0;
-    }) || variants[0]
+    }) || list[0]
   );
 }
 
 export function resolveSelectedVariant(product, selection) {
-  var variants = product?.variants || product?.options?.variants || [];
-  if (!variants.length) return null;
-
-  var requestedSize = selection?.size;
-  var requestedColor = selection?.color;
-  var matched = variants.find(function (variant) {
-    return variant.size === requestedSize && variant.color === requestedColor;
-  });
-
-  return matched || getDefaultVariant(product);
+  var matrix = product?.options?.variants || {};
+  var size = selection?.size;
+  var color = selection?.color;
+  if (!size || !color) return getDefaultVariant(product);
+  var key = size + "::" + color;
+  return matrix[key] || getDefaultVariant(product);
 }
 
 export function computeVariantPrice(product, selection) {

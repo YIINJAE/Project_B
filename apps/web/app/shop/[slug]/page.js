@@ -1,13 +1,7 @@
 import Link from "next/link";
 import { Badge, Button, Section } from "@/components/ui";
-import {
-  computeVariantPrice,
-  computeVariantStock,
-  formatPrice,
-  getDefaultVariant,
-  products,
-  resolveSelectedVariant
-} from "@/lib/catalog";
+import { formatPrice, products } from "@/lib/catalog";
+import { OptionSelector } from "@/components/product/OptionSelector";
 
 export function generateMetadata({ params }) {
   var item = products.find(function (p) {
@@ -74,17 +68,7 @@ export default function ProductDetailPage({ params }) {
   }
 
   var images = item.images || [];
-  var colorOptions = item.options?.colors || [];
   var sizeOptions = item.options?.sizes || [];
-  var defaultVariant = getDefaultVariant(item);
-  var defaultSelection = {
-    size: defaultVariant?.size || sizeOptions[0] || "",
-    color: defaultVariant?.color || colorOptions[0]?.name || ""
-  };
-  var selectedVariant = resolveSelectedVariant(item, defaultSelection);
-  var finalPrice = computeVariantPrice(item, defaultSelection);
-  var finalStock = computeVariantStock(item, defaultSelection);
-  var variantSoldOut = item.soldOut || finalStock < 1;
   var related = products
     .filter(function (candidate) {
       return candidate.slug !== item.slug && candidate.category === item.category;
@@ -116,75 +100,16 @@ export default function ProductDetailPage({ params }) {
           <div className="detail-meta">
             <p className="product-category">Category: {item.category.toUpperCase()}</p>
             <p>{item.description}</p>
-            <p className="product-price">{formatPrice(finalPrice)}</p>
             <p className="detail-spec">Material: {item.material}</p>
             <p className="detail-spec">Fit: {item.fitNote}</p>
             <p className="detail-spec">Care: {item.care}</p>
-            {selectedVariant ? (
-              <p className="detail-spec">
-                Selected option: {selectedVariant.size} / {selectedVariant.color}
-              </p>
-            ) : null}
             <div className="chip-row">
-              {variantSoldOut ? <Badge className="c-badge-soldout">SOLD OUT</Badge> : <Badge>IN STOCK</Badge>}
+              {item.soldOut ? <Badge className="c-badge-soldout">SOLD OUT</Badge> : <Badge>OPTION SELECT</Badge>}
             </div>
-            <p className={variantSoldOut ? "stock-state stock-state-soldout" : "stock-state"}>
-              {variantSoldOut ? "This option is currently sold out." : "Ready to add to cart. Stock: " + String(finalStock)}
-            </p>
           </div>
         </div>
 
-        <form className="detail-options" action="/cart" method="get">
-          <fieldset>
-            <legend>Size</legend>
-            <div className="option-row">
-              {sizeOptions.map(function (size) {
-                var id = "size-" + size;
-                return (
-                  <label key={id} htmlFor={id} className="option-pill">
-                    <input
-                      id={id}
-                      type="radio"
-                      name="size"
-                      value={size}
-                      defaultChecked={size === defaultSelection.size}
-                    />
-                    <span>{size}</span>
-                  </label>
-                );
-              })}
-            </div>
-          </fieldset>
-
-          <fieldset>
-            <legend>Color</legend>
-            <div className="option-row">
-              {colorOptions.map(function (color) {
-                var colorId = "color-" + color.name.toLowerCase();
-                return (
-                  <label key={colorId} htmlFor={colorId} className="option-pill">
-                    <input
-                      id={colorId}
-                      type="radio"
-                      name="color"
-                      value={color.name}
-                      defaultChecked={color.name === defaultSelection.color}
-                    />
-                    <span className="color-dot" style={{ backgroundColor: color.swatch }} aria-hidden="true" />
-                    <span>{color.name}</span>
-                  </label>
-                );
-              })}
-            </div>
-          </fieldset>
-
-          <div className="action-row">
-            <Button href="/shop" variant="secondary">Back to Shop</Button>
-            <button type="submit" className="c-btn" disabled={variantSoldOut} aria-disabled={variantSoldOut}>
-              Add to Cart
-            </button>
-          </div>
-        </form>
+        <OptionSelector item={item} />
       </Section>
 
       <Section title="Size Guide" id="size-guide-title">
