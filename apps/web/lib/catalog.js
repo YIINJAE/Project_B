@@ -1,15 +1,49 @@
 export var categories = ["all", "outer", "top", "pants", "acc"];
 
+var palette = [
+  { name: "Black", swatch: "#202430" },
+  { name: "Stone", swatch: "#b5aea1" },
+  { name: "Forest", swatch: "#3d5f55" },
+  { name: "Navy", swatch: "#1c3159" },
+  { name: "Ivory", swatch: "#f0ece4" }
+];
+
+var sizeSets = [
+  ["XS", "S", "M", "L"],
+  ["S", "M", "L", "XL"],
+  ["28", "30", "32", "34"]
+];
+
 export var products = Array.from({ length: 30 }, function (_, index) {
   var seq = index + 1;
   var category = categories[(seq % (categories.length - 1)) + 1];
+  var paletteOffset = seq % palette.length;
+  var colors = [0, 1, 2].map(function (step) {
+    return palette[(paletteOffset + step) % palette.length];
+  });
+  var sizeOptions = sizeSets[seq % sizeSets.length];
+  var imageCount = 4;
+  var images = Array.from({ length: imageCount }, function (_unused, imageIndex) {
+    return {
+      src: "/assets/shop/" + category + "-" + String((imageIndex % 3) + 1) + ".jpg",
+      alt: "Detail view " + String(imageIndex + 1) + " of Item " + String(seq).padStart(2, "0")
+    };
+  });
   return {
     slug: "item-" + String(seq).padStart(2, "0"),
     name: "Item " + String(seq).padStart(2, "0"),
     category: category,
     price: 39000 + index * 3000,
     soldOut: seq % 7 === 0,
-    description: "Week2 dummy product for shop/detail flow"
+    description: "Week2 dummy product for shop/detail flow",
+    images: images,
+    options: {
+      sizes: sizeOptions,
+      colors: colors
+    },
+    fitNote: "Relaxed silhouette with room through chest and shoulder.",
+    material: seq % 2 === 0 ? "Cotton-nylon blend shell" : "Washed cotton twill",
+    care: "Cold wash or dry clean. Hang dry recommended."
   };
 });
 
