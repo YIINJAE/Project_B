@@ -35,3 +35,20 @@ This script creates required labels (if missing) and triggers `coordinator.yml`.
 
 After that, merged PRs that include `Closes #<issue-number>` will close task issues,
 and coordinator creates the next round automatically when all 4 tasks are closed.
+
+## Week1 Run (Brief)
+
+- Static MVP preview:
+```bash
+python3 -m http.server 4173
+```
+  Open `http://localhost:4173` in your browser.
+
+- `apps/web` (when present):
+```bash
+cd apps/web
+npm ci
+npm run lint
+npm run typecheck
+npm run build
+```

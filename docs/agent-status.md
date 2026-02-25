@@ -26,3 +26,9 @@
 - DONE (2026-02-25): Commit `e328df42f427406637dc17f2b0dbb0b7b55e355d`.
   Verification: `git diff --check` clean; manual review of `pr-policy.yml` branch/scope rules and idempotent coordinator-stub comment logic.
   Handoff: Added concrete Agent 1 completion example (`agent1/mvp-v2`) in automation docs for cross-agent feedback and completion-contract reference.
+- STARTED (2026-02-25): Scope `apps/web` CI workflow + docs handoff update.
+  Planned files: `.github/workflows/web-ci.yml`, `packages/.gitkeep`, `README.md`, `docs/agent-status.md`.
+  Risks: `apps/web` does not exist yet in this branch, so workflow must skip gracefully until web workspace is added.
+- DONE (2026-02-25): Commit `c4e93f6`.
+  Verification: `git diff --check` clean; reviewed `.github/workflows/web-ci.yml` trigger paths and `hashFiles('apps/web/package.json')` skip guard; confirmed README Week1 run section and `packages/.gitkeep` placeholder.
+  Handoff: CI runs on PR/push changes under `apps/web/**` and executes install/lint/typecheck/build once the web workspace is added.
