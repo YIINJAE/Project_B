@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Badge, Button, Card, Input, Section } from "@/components/ui";
 
 const categoryChips = ["All", "Outer", "Top", "Bottom", "Accessories", "Shoes"];
 
@@ -17,21 +17,21 @@ export default function ShopPage() {
   return (
     <main className="page-shell">
       <section className="hero-block">
-        <p className="eyebrow">Project B</p>
+        <Badge>Project B</Badge>
         <h1>Dummy Shop Page</h1>
         <p>
           Category chips and product cards are static placeholders for now, ready for
           future filtering and data wiring.
         </p>
         <div className="action-row">
-          <Link href="/" className="button-link button-link-secondary">
-            Back to Home
-          </Link>
+          <Button href="/" variant="secondary">Back to Home</Button>
         </div>
       </section>
 
-      <section className="section-block" aria-labelledby="shop-categories-title">
-        <h2 id="shop-categories-title">Categories</h2>
+      <Section title="Categories" id="shop-categories-title">
+        <div className="search-row">
+          <Input type="text" placeholder="Search products" aria-label="Search products" />
+        </div>
         <div className="chip-row" role="list" aria-label="Shop categories">
           {categoryChips.map((chip) => (
             <span className="category-chip" role="listitem" key={chip}>
@@ -39,21 +39,20 @@ export default function ShopPage() {
             </span>
           ))}
         </div>
-      </section>
+      </Section>
 
-      <section className="section-block" aria-labelledby="shop-products-title">
-        <h2 id="shop-products-title">Sample Product Grid</h2>
+      <Section title="Sample Product Grid" id="shop-products-title">
         <div className="product-grid">
           {shopProducts.map((product) => (
-            <article className="product-card" key={product.name}>
+            <Card key={product.name}>
               <div className="product-thumb" aria-hidden="true" />
               <p className="product-category">{product.category}</p>
               <h3>{product.name}</h3>
               <p className="product-price">{product.price}</p>
-            </article>
+            </Card>
           ))}
         </div>
-      </section>
+      </Section>
     </main>
   );
 }
