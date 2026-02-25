@@ -1,0 +1,23 @@
+import Link from "next/link";
+
+export default function NotFoundPage() {
+  return (
+    <main className="grid min-h-screen place-items-center bg-slate-950 px-6 text-slate-100">
+      <section className="w-full max-w-xl rounded border border-slate-800 bg-slate-900/40 p-8 text-center">
+        <p className="text-sm uppercase tracking-[0.2em] text-cyan-300">404</p>
+        <h1 className="mt-2 text-4xl font-semibold tracking-tight">Page not found</h1>
+        <p className="mt-3 text-slate-300">
+          The route you requested does not exist in this build.
+        </p>
+        <div className="mt-6 flex justify-center gap-3">
+          <Link className="rounded bg-cyan-500 px-4 py-2 font-medium text-slate-950" href="/">
+            Go Home
+          </Link>
+          <Link className="rounded border border-slate-700 px-4 py-2 font-medium text-slate-100" href="/shop">
+            Visit Shop
+          </Link>
+        </div>
+      </section>
+    </main>
+  );
+}
