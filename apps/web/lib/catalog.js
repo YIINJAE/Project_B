@@ -14,6 +14,21 @@ var sizeSets = [
   ["28", "30", "32", "34"]
 ];
 
+function buildVariantMatrix(seq, sizeOptions, colors, isSoldOut) {
+  return sizeOptions.reduce(function (acc, size, sizeIndex) {
+    colors.forEach(function (color, colorIndex) {
+      var key = size + "::" + color.name;
+      var stock = isSoldOut ? 0 : (seq + sizeIndex * 2 + colorIndex * 3) % 5;
+      var priceDelta = sizeIndex * 1200 + colorIndex * 400;
+      acc[key] = {
+        stock: stock,
+        priceDelta: priceDelta
+      };
+    });
+    return acc;
+  }, {});
+}
+
 export var products = Array.from({ length: 30 }, function (_, index) {
   var seq = index + 1;
   var category = categories[(seq % (categories.length - 1)) + 1];
@@ -29,17 +44,20 @@ export var products = Array.from({ length: 30 }, function (_, index) {
       alt: "Detail view " + String(imageIndex + 1) + " of Item " + String(seq).padStart(2, "0")
     };
   });
+  var isSoldOut = seq % 7 === 0;
+  var variantMatrix = buildVariantMatrix(seq, sizeOptions, colors, isSoldOut);
   return {
     slug: "item-" + String(seq).padStart(2, "0"),
     name: "Item " + String(seq).padStart(2, "0"),
     category: category,
     price: 39000 + index * 3000,
-    soldOut: seq % 7 === 0,
+    soldOut: isSoldOut,
     description: "Week2 dummy product for shop/detail flow",
     images: images,
     options: {
       sizes: sizeOptions,
-      colors: colors
+      colors: colors,
+      variants: variantMatrix
     },
     fitNote: "Relaxed silhouette with room through chest and shoulder.",
     material: seq % 2 === 0 ? "Cotton-nylon blend shell" : "Washed cotton twill",
