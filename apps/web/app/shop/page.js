@@ -35,6 +35,12 @@ function buildQuery(current, patch) {
   return query ? "/shop?" + query : "/shop";
 }
 
+function buildDetailLink(slug, current) {
+  var next = new URLSearchParams(current || "");
+  var query = next.toString();
+  return query ? "/shop/" + slug + "?" + query : "/shop/" + slug;
+}
+
 export default function ShopPage({ searchParams }) {
   var activeCategory = (searchParams?.category || "all").toLowerCase();
   var filtered = filterAndSortProducts(products, searchParams || {});
@@ -95,7 +101,7 @@ export default function ShopPage({ searchParams }) {
               <div className="product-thumb" aria-hidden="true" />
               <p className="product-category">{product.category.toUpperCase()}</p>
               <h3>
-                <Link href={"/shop/" + product.slug}>{product.name}</Link>
+                <Link href={buildDetailLink(product.slug, searchParams)}>{product.name}</Link>
               </h3>
               <p className="product-price">{formatPrice(product.price)}</p>
               {product.soldOut ? <Badge className="c-badge-soldout">SOLD OUT</Badge> : null}

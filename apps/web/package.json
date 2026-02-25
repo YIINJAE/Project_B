@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "route:check": "node scripts/route-check.mjs",
+    "flow:check": "node scripts/shop-flow-check.mjs",
     "typecheck": "node -e \"console.log('No TypeScript files yet: typecheck skipped')\""
   },
   "dependencies": {

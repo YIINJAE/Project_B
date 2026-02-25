@@ -51,7 +51,13 @@ export function generateMetadata({ params }) {
   };
 }
 
-export default function ProductDetailPage({ params }) {
+function buildBackHref(searchParams) {
+  var next = new URLSearchParams(searchParams || "");
+  var query = next.toString();
+  return query ? "/shop?" + query : "/shop";
+}
+
+export default function ProductDetailPage({ params, searchParams }) {
   var item = products.find(function (p) {
     return p.slug === params.slug;
   });
@@ -68,6 +74,7 @@ export default function ProductDetailPage({ params }) {
   }
 
   var images = item.images || [];
+  var backHref = buildBackHref(searchParams);
   var sizeOptions = item.options?.sizes || [];
   var related = products
     .filter(function (candidate) {
@@ -109,7 +116,7 @@ export default function ProductDetailPage({ params }) {
           </div>
         </div>
 
-        <OptionSelector item={item} />
+        <OptionSelector item={item} backHref={backHref} />
       </Section>
 
       <Section title="Size Guide" id="size-guide-title">

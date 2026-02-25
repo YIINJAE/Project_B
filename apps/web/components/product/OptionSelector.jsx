@@ -9,7 +9,7 @@ import {
   resolveSelectedVariant
 } from "@/lib/catalog";
 
-export function OptionSelector({ item }) {
+export function OptionSelector({ item, backHref = "/shop" }) {
   if (!item) {
     return null;
   }
@@ -104,7 +104,7 @@ export function OptionSelector({ item }) {
       </fieldset>
 
       <div className="action-row">
-        <Button href="/shop" variant="secondary">Back to Shop</Button>
+        <Button href={backHref} variant="secondary">Back to Shop</Button>
         <button type="submit" className="c-btn" disabled={isVariantSoldOut} aria-disabled={isVariantSoldOut}>
           Add to Cart
         </button>
