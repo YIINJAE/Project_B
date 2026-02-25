@@ -1,6 +1,13 @@
 import Link from "next/link";
 import { Badge, Button, Section } from "@/components/ui";
-import { formatPrice, products } from "@/lib/catalog";
+import {
+  computeVariantPrice,
+  computeVariantStock,
+  formatPrice,
+  getDefaultVariant,
+  products,
+  resolveSelectedVariant
+} from "@/lib/catalog";
 
 export function generateMetadata({ params }) {
   var item = products.find(function (p) {
@@ -69,6 +76,15 @@ export default function ProductDetailPage({ params }) {
   var images = item.images || [];
   var colorOptions = item.options?.colors || [];
   var sizeOptions = item.options?.sizes || [];
+  var defaultVariant = getDefaultVariant(item);
+  var defaultSelection = {
+    size: defaultVariant?.size || sizeOptions[0] || "",
+    color: defaultVariant?.color || colorOptions[0]?.name || ""
+  };
+  var selectedVariant = resolveSelectedVariant(item, defaultSelection);
+  var finalPrice = computeVariantPrice(item, defaultSelection);
+  var finalStock = computeVariantStock(item, defaultSelection);
+  var variantSoldOut = item.soldOut || finalStock < 1;
   var related = products
     .filter(function (candidate) {
       return candidate.slug !== item.slug && candidate.category === item.category;
@@ -100,15 +116,20 @@ export default function ProductDetailPage({ params }) {
           <div className="detail-meta">
             <p className="product-category">Category: {item.category.toUpperCase()}</p>
             <p>{item.description}</p>
-            <p className="product-price">{formatPrice(item.price)}</p>
+            <p className="product-price">{formatPrice(finalPrice)}</p>
             <p className="detail-spec">Material: {item.material}</p>
             <p className="detail-spec">Fit: {item.fitNote}</p>
             <p className="detail-spec">Care: {item.care}</p>
+            {selectedVariant ? (
+              <p className="detail-spec">
+                Selected option: {selectedVariant.size} / {selectedVariant.color}
+              </p>
+            ) : null}
             <div className="chip-row">
-              {item.soldOut ? <Badge className="c-badge-soldout">SOLD OUT</Badge> : <Badge>IN STOCK</Badge>}
+              {variantSoldOut ? <Badge className="c-badge-soldout">SOLD OUT</Badge> : <Badge>IN STOCK</Badge>}
             </div>
-            <p className={item.soldOut ? "stock-state stock-state-soldout" : "stock-state"}>
-              {item.soldOut ? "This item is currently sold out." : "Ready to add to cart."}
+            <p className={variantSoldOut ? "stock-state stock-state-soldout" : "stock-state"}>
+              {variantSoldOut ? "This option is currently sold out." : "Ready to add to cart. Stock: " + String(finalStock)}
             </p>
           </div>
         </div>
@@ -121,7 +142,13 @@ export default function ProductDetailPage({ params }) {
                 var id = "size-" + size;
                 return (
                   <label key={id} htmlFor={id} className="option-pill">
-                    <input id={id} type="radio" name="size" value={size} defaultChecked={size === "M"} />
+                    <input
+                      id={id}
+                      type="radio"
+                      name="size"
+                      value={size}
+                      defaultChecked={size === defaultSelection.size}
+                    />
                     <span>{size}</span>
                   </label>
                 );
@@ -132,7 +159,7 @@ export default function ProductDetailPage({ params }) {
           <fieldset>
             <legend>Color</legend>
             <div className="option-row">
-              {colorOptions.map(function (color, index) {
+              {colorOptions.map(function (color) {
                 var colorId = "color-" + color.name.toLowerCase();
                 return (
                   <label key={colorId} htmlFor={colorId} className="option-pill">
@@ -141,7 +168,7 @@ export default function ProductDetailPage({ params }) {
                       type="radio"
                       name="color"
                       value={color.name}
-                      defaultChecked={index === 0}
+                      defaultChecked={color.name === defaultSelection.color}
                     />
                     <span className="color-dot" style={{ backgroundColor: color.swatch }} aria-hidden="true" />
                     <span>{color.name}</span>
@@ -153,7 +180,7 @@ export default function ProductDetailPage({ params }) {
 
           <div className="action-row">
             <Button href="/shop" variant="secondary">Back to Shop</Button>
-            <button type="submit" className="c-btn" disabled={item.soldOut} aria-disabled={item.soldOut}>
+            <button type="submit" className="c-btn" disabled={variantSoldOut} aria-disabled={variantSoldOut}>
               Add to Cart
             </button>
           </div>
