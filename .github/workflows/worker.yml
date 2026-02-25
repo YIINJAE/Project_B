@@ -1,0 +1,38 @@
+name: Worker Task
+
+on:
+  workflow_dispatch:
+    inputs:
+      round_label:
+        description: 'Round label (e.g. round:2026-02-25-01)'
+        required: true
+        type: string
+      issue_number:
+        description: 'Task issue number'
+        required: true
+        type: string
+      agent_label:
+        description: 'Agent label (e.g. agent:1)'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Worker context
+        run: |
+          echo "Round: ${{ inputs.round_label }}"
+          echo "Issue: #${{ inputs.issue_number }}"
+          echo "Agent: ${{ inputs.agent_label }}"
+
+      - name: TODO implement worker logic
+        run: |
+          echo "Implement your actual worker pipeline here."
+          echo "Then create PR with: Closes #${{ inputs.issue_number }}"
