@@ -55,3 +55,6 @@
 - STARTED (2026-02-25): Issue #36 order state machine draft + order creation API initial state integration.
   Planned files: `apps/web/lib/order-state.js`, `apps/web/app/api/v1/orders/route.js`, `docs/order-state-machine.md`, `docs/agent-status.md`.
   Risks: 기존 주문 API 구현이 아직 없어 route는 MVP mock 수준으로 제한하고, 상태 전이 규칙을 독립 유틸로 설계해 후속 서버 연동 시 재사용 가능하게 유지.
+- DONE (2026-02-25): Issue #36 commit `47424ff`.
+  Verification: `node --check apps/web/lib/order-state.js` and `node --check apps/web/app/api/v1/orders/route.js` passed; `git diff --check` clean; `node --input-type=module` smoke check confirmed `ORDER_INITIAL_STATE=pending_payment`, valid transition `pending_payment->paid=true`, invalid transition `delivered->paid=false`.
+  Handoff: `POST /api/v1/orders` now initializes `status` from `ORDER_INITIAL_STATE`; replace mock fields/ID generation with real cart/pricing persistence in backend integration.
