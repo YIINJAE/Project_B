@@ -7,8 +7,8 @@
   }
 
   function setupMobileNav() {
-    var toggle = document.querySelector('[data-nav-toggle], .nav-toggle, #nav-toggle');
-    var menu = document.querySelector('[data-nav-menu], .site-nav, #site-nav');
+    var toggle = document.querySelector('#mobile-nav-toggle, [data-nav-toggle], .nav-toggle, #nav-toggle');
+    var menu = document.querySelector('#primary-nav, [data-nav-menu], .site-nav, #site-nav');
 
     if (!toggle || !menu) return;
 
@@ -18,10 +18,12 @@
 
     toggle.setAttribute('aria-controls', menu.id);
     toggle.setAttribute('aria-expanded', 'false');
+    menu.setAttribute('data-state', 'closed');
 
     function setOpenState(isOpen) {
       menu.classList.toggle('is-open', isOpen);
       toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      menu.setAttribute('data-state', isOpen ? 'open' : 'closed');
     }
 
     function toggleNav() {
