@@ -1,3 +1,4 @@
-export function Card({ children }) {
-  return <article className="c-card">{children}</article>;
+export function Card({ children, className = "" }) {
+  var mergedClassName = className ? "c-card " + className : "c-card";
+  return <article className={mergedClassName}>{children}</article>;
 }

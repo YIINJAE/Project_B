@@ -32,7 +32,7 @@ export default function ProductDetailPage({ params }) {
   }
 
   return (
-    <main className="page-shell">
+    <main className={item.soldOut ? "page-shell product-detail is-soldout" : "page-shell product-detail"}>
       <Section title={item.name} id="product-title">
         <p className="product-category">Category: {item.category.toUpperCase()}</p>
         <p>{item.description}</p>
@@ -40,11 +40,20 @@ export default function ProductDetailPage({ params }) {
         <div className="chip-row">
           <Badge>Size: M</Badge>
           <Badge>Color: Black</Badge>
-          {item.soldOut ? <Badge>SOLD OUT</Badge> : <Badge>IN STOCK</Badge>}
+          {item.soldOut ? <Badge className="c-badge-soldout">SOLD OUT</Badge> : <Badge>IN STOCK</Badge>}
         </div>
+        <p className={item.soldOut ? "stock-state stock-state-soldout" : "stock-state"}>
+          {item.soldOut ? "This item is currently sold out." : "Ready to add to cart."}
+        </p>
         <div className="action-row">
           <Button href="/shop" variant="secondary">Back to Shop</Button>
-          <Link href="/cart" className="c-btn">Add to Cart</Link>
+          {item.soldOut ? (
+            <button type="button" className="c-btn" disabled aria-disabled="true">
+              Add to Cart
+            </button>
+          ) : (
+            <Link href="/cart" className="c-btn">Add to Cart</Link>
+          )}
         </div>
       </Section>
     </main>

@@ -74,14 +74,29 @@ export default function ShopPage({ searchParams }) {
       <Section title="Sample Product Grid" id="shop-products-title">
         <div className="product-grid">
           {filtered.map((product) => (
-            <Card key={product.slug}>
+            <Card
+              key={product.slug}
+              className={product.soldOut ? "product-card is-soldout" : "product-card"}
+            >
               <div className="product-thumb" aria-hidden="true" />
               <p className="product-category">{product.category.toUpperCase()}</p>
               <h3>
                 <Link href={"/shop/" + product.slug}>{product.name}</Link>
               </h3>
               <p className="product-price">{formatPrice(product.price)}</p>
-              {product.soldOut ? <Badge>SOLD OUT</Badge> : null}
+              {product.soldOut ? <Badge className="c-badge-soldout">SOLD OUT</Badge> : null}
+              <p className={product.soldOut ? "stock-state stock-state-soldout" : "stock-state"}>
+                {product.soldOut ? "Currently sold out" : "In stock"}
+              </p>
+              <div className="action-row">
+                {product.soldOut ? (
+                  <button type="button" className="c-btn" disabled aria-disabled="true">
+                    Add to Cart
+                  </button>
+                ) : (
+                  <Link href="/cart" className="c-btn">Add to Cart</Link>
+                )}
+              </div>
             </Card>
           ))}
         </div>
