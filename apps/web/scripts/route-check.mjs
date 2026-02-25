@@ -67,6 +67,14 @@ function normalizeHref(href) {
   return withoutHash;
 }
 
+function routeToRegex(route) {
+  const escaped = route
+    .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+    .replace(/\\\[\\\.\\.\\\.[^\\\]]+\\\]/g, "[^/]+")
+    .replace(/\\\[[^\\\]]+\\\]/g, "[^/]+");
+  return new RegExp(`^${escaped}$`);
+}
+
 function collectHrefs(filePath) {
   const source = fs.readFileSync(filePath, "utf8");
   const hrefPattern = /\bhref\s*=\s*["'`]([^"'`]+)["'`]/g;
@@ -106,7 +114,10 @@ for (const sourceFile of sourceFiles) {
       continue;
     }
     const normalized = normalizeHref(href);
-    if (!routes.has(normalized)) {
+    const matchesKnownRoute =
+      routes.has(normalized) ||
+      Array.from(routes).some((route) => routeToRegex(route).test(normalized));
+    if (!matchesKnownRoute) {
       errors.push(`broken href "${href}" in ${path.relative(ROOT_DIR, sourceFile)} (no matching route file)`);
     }
   }
