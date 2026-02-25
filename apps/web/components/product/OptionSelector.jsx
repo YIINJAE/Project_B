@@ -37,6 +37,11 @@ export function OptionSelector({ item, backHref = "/shop" }) {
   var stockMessage = isVariantSoldOut
     ? "Selected option is sold out."
     : "Ready to add to cart. " + String(liveStock) + " in stock.";
+  var checkoutHref = "/checkout?"
+    + "slug=" + encodeURIComponent(item.slug)
+    + "&size=" + encodeURIComponent(selectedSize)
+    + "&color=" + encodeURIComponent(selectedColorName)
+    + "&qty=1";
 
   return (
     <form className="detail-options" action="/cart" method="get">
@@ -108,6 +113,13 @@ export function OptionSelector({ item, backHref = "/shop" }) {
         <button type="submit" className="c-btn" disabled={isVariantSoldOut} aria-disabled={isVariantSoldOut}>
           Add to Cart
         </button>
+        {isVariantSoldOut ? (
+          <button type="button" className="c-btn c-btn-secondary" disabled aria-disabled="true">
+            Buy Now
+          </button>
+        ) : (
+          <Button href={checkoutHref} variant="secondary">Buy Now</Button>
+        )}
       </div>
     </form>
   );
