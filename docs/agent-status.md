@@ -56,3 +56,9 @@
 - DONE (2026-02-25): Issue #25 commit `3fbb390eb89164760a784ed27eeabe5c72c3dc14`.
   Verification: `git diff --check` clean, `node --check` passed for updated app route files, metadata now includes layout-level `metadataBase` + canonical and page-level OG/Twitter/dynamic product metadata/not-found metadata; `cd apps/web && npm run lint` failed in this environment with `next: not found` (dependency missing).
   Handoff: Placeholder base domain uses `https://project-b.example`; replace with deployment domain/env-driven value during release wiring.
+- STARTED (2026-02-25): Issue #36 order state machine draft + order creation API initial state integration.
+  Planned files: `apps/web/lib/order-state.js`, `apps/web/app/api/v1/orders/route.js`, `docs/order-state-machine.md`, `docs/agent-status.md`.
+  Risks: 기존 주문 API 구현이 아직 없어 route는 MVP mock 수준으로 제한하고, 상태 전이 규칙을 독립 유틸로 설계해 후속 서버 연동 시 재사용 가능하게 유지.
+- DONE (2026-02-25): Issue #36 commit `47424ff`.
+  Verification: `node --check apps/web/lib/order-state.js` and `node --check apps/web/app/api/v1/orders/route.js` passed; `git diff --check` clean; `node --input-type=module` smoke check confirmed `ORDER_INITIAL_STATE=pending_payment`, valid transition `pending_payment->paid=true`, invalid transition `delivered->paid=false`.
+  Handoff: `POST /api/v1/orders` now initializes `status` from `ORDER_INITIAL_STATE`; replace mock fields/ID generation with real cart/pricing persistence in backend integration.
