@@ -1,7 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  color-scheme: dark;
+  --page-bg: #f7f5f1;
+  --surface: #ffffff;
+  --text-main: #20211f;
+  --text-muted: #54584f;
+  --line: #ded8cf;
+  --chip-bg: #f0ece5;
+  --chip-active: #dbd2c4;
+  --accent: #2f5e57;
 }
 
 * {
@@ -16,5 +23,185 @@ body {
 }
 
 body {
+  background: radial-gradient(circle at top right, #efe6d7 0, var(--page-bg) 55%);
+  color: var(--text-main);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.5;
+}
+
+a {
+  color: inherit;
+}
+
+.page-shell {
+  margin: 0 auto;
+  max-width: 72rem;
+  padding: 2.5rem 1rem 4rem;
+}
+
+.hero-block,
+.section-block {
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--surface);
+  padding: 1.25rem;
+}
+
+.hero-block {
+  margin-bottom: 1rem;
+}
+
+.section-block + .section-block {
+  margin-top: 1rem;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+h1 {
+  margin-top: 0.4rem;
+  font-size: clamp(1.6rem, 4vw, 2.25rem);
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+}
+
+.hero-block p + p,
+.hero-block h1 + p {
+  margin-top: 0.6rem;
+  color: var(--text-muted);
+}
+
+.action-row {
+  margin-top: 1rem;
+}
+
+.button-link,
+.inline-link {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.button-link {
+  background: var(--accent);
+  color: #fff;
+  padding: 0.55rem 0.95rem;
+}
+
+.button-link-secondary {
+  background: transparent;
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.inline-link {
+  color: var(--accent);
+  padding: 0.25rem 0.55rem;
+}
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.chip-row {
+  margin-top: 0.8rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.category-chip {
+  background: var(--chip-bg);
+  border: 1px solid #e5ddd1;
+  border-radius: 999px;
+  color: #3f4538;
+  padding: 0.38rem 0.72rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.category-chip:first-child {
+  background: var(--chip-active);
+}
+
+.product-grid {
+  margin-top: 0.9rem;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(11.5rem, 1fr));
+}
+
+.product-card {
+  border: 1px solid var(--line);
+  border-radius: 0.8rem;
+  padding: 0.8rem;
+  background: #fffdf9;
+}
+
+.product-thumb {
+  height: 6.5rem;
+  border-radius: 0.55rem;
+  background: linear-gradient(140deg, #ddcfb8, #c7b9a1);
+  margin-bottom: 0.65rem;
+}
+
+.product-category {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.25rem;
+}
+
+.product-card h3 {
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+.product-price {
+  margin-top: 0.3rem;
+  font-weight: 700;
+  color: #2b3a28;
+}
+
+@media (min-width: 48rem) {
+  .page-shell {
+    padding: 3rem 1.5rem 4.5rem;
+  }
+
+  .hero-block,
+  .section-block {
+    padding: 1.5rem;
+  }
+
+  .section-block + .section-block {
+    margin-top: 1.25rem;
+  }
+
+  .product-thumb {
+    height: 7.2rem;
+  }
 }

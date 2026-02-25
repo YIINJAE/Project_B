@@ -1,14 +1,75 @@
+import Link from "next/link";
+
+const categoryChips = ["All", "Outer", "Top", "Bottom", "Accessories"];
+
+const featuredProducts = [
+  {
+    name: "Breeze Linen Jacket",
+    category: "Outer",
+    price: "$128"
+  },
+  {
+    name: "Studio Rib Tee",
+    category: "Top",
+    price: "$42"
+  },
+  {
+    name: "Harbor Wide Pants",
+    category: "Bottom",
+    price: "$86"
+  },
+  {
+    name: "Transit Crossbody",
+    category: "Accessories",
+    price: "$64"
+  }
+];
+
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-100">
-      <section className="mx-auto flex w-full max-w-3xl flex-col gap-4 px-6 py-24">
-        <p className="text-sm uppercase tracking-[0.2em] text-cyan-300">Project B</p>
-        <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-          Next.js app-router scaffold is ready.
-        </h1>
-        <p className="text-base leading-7 text-slate-300">
-          Edit <code className="rounded bg-slate-900 px-1.5 py-0.5">apps/web/app/page.js</code> to start building.
+    <main className="page-shell">
+      <section className="hero-block">
+        <p className="eyebrow">Project B</p>
+        <h1>Dummy Home Page</h1>
+        <p>
+          A simple storefront starter with category chips and a sample grid. Browse the
+          full dummy catalog on the Shop page.
         </p>
+        <div className="action-row">
+          <Link href="/shop" className="button-link">
+            Go to Shop
+          </Link>
+        </div>
+      </section>
+
+      <section className="section-block" aria-labelledby="home-categories-title">
+        <h2 id="home-categories-title">Shop by Category</h2>
+        <div className="chip-row" role="list" aria-label="Category chips">
+          {categoryChips.map((chip) => (
+            <span className="category-chip" role="listitem" key={chip}>
+              {chip}
+            </span>
+          ))}
+        </div>
+      </section>
+
+      <section className="section-block" aria-labelledby="featured-products-title">
+        <div className="section-head">
+          <h2 id="featured-products-title">Featured Products</h2>
+          <Link href="/shop" className="inline-link">
+            View all
+          </Link>
+        </div>
+        <div className="product-grid">
+          {featuredProducts.map((product) => (
+            <article className="product-card" key={product.name}>
+              <div className="product-thumb" aria-hidden="true" />
+              <p className="product-category">{product.category}</p>
+              <h3>{product.name}</h3>
+              <p className="product-price">{product.price}</p>
+            </article>
+          ))}
+        </div>
       </section>
     </main>
   );
