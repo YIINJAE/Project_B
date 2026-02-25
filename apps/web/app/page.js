@@ -3,8 +3,22 @@ import { Badge, Button, Card, Section } from "@/components/ui";
 import { formatPrice } from "@/lib/catalog";
 
 export const metadata = {
-  title: "Home | Project B",
-  description: "Week2 MVP home with category and featured product preview."
+  title: "Home",
+  description: "Discover Project B featured categories and highlighted products.",
+  alternates: {
+    canonical: "/"
+  },
+  openGraph: {
+    title: "Project B Home",
+    description: "Discover Project B featured categories and highlighted products.",
+    url: "/",
+    type: "website"
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Project B Home",
+    description: "Discover Project B featured categories and highlighted products."
+  }
 };
 
 const categoryChips = ["All", "Outer", "Top", "Bottom", "Accessories"];

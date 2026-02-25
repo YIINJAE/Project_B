@@ -38,3 +38,6 @@
 - DONE (2026-02-25): Commit `c4e93f6`.
   Verification: `git diff --check` clean; reviewed `.github/workflows/web-ci.yml` trigger paths and `hashFiles('apps/web/package.json')` skip guard; confirmed README Week1 run section and `packages/.gitkeep` placeholder.
   Handoff: CI runs on PR/push changes under `apps/web/**` and executes install/lint/typecheck/build once the web workspace is added.
+- STARTED (2026-02-25): Issue #25 SEO metadata/OG for `apps/web` pages.
+  Planned files: `apps/web/app/layout.js`, `apps/web/app/page.js`, `apps/web/app/shop/page.js`, `apps/web/app/shop/[slug]/page.js`, `apps/web/app/not-found.js`, `docs/agent-status.md`.
+  Risks: Keep canonical/base metadata compatible with local/dev environments while avoiding hardcoded external production domains.

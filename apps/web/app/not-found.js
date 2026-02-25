@@ -1,5 +1,28 @@
 import Link from "next/link";
 
+export const metadata = {
+  title: "Page Not Found",
+  description: "The requested page does not exist in the current Project B build.",
+  alternates: {
+    canonical: "/404"
+  },
+  robots: {
+    index: false,
+    follow: true
+  },
+  openGraph: {
+    title: "404 | Project B",
+    description: "The requested page does not exist in the current Project B build.",
+    url: "/404",
+    type: "website"
+  },
+  twitter: {
+    card: "summary",
+    title: "404 | Project B",
+    description: "The requested page does not exist in the current Project B build."
+  }
+};
+
 export default function NotFoundPage() {
   return (
     <main className="grid min-h-screen place-items-center bg-slate-950 px-6 text-slate-100">
