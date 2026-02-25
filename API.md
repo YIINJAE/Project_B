@@ -280,6 +280,72 @@ Response `204 No Content`
 
 ## Order Endpoints
 
+### POST /api/orders (Next App Router Mock)
+Create a mock order from client payload (`apps/web/app/api/orders/route.js`).
+
+Request:
+```json
+{
+  "items": [
+    {
+      "productId": "prd_2001",
+      "sku": "prd_2001_blk_m",
+      "quantity": 1
+    }
+  ],
+  "customer": {
+    "name": "Jane Doe",
+    "email": "jane@example.com",
+    "phone": "+1-415-555-0123"
+  },
+  "shipping": {
+    "recipient": "Jane Doe",
+    "address1": "123 Main St",
+    "address2": "Apt 4B",
+    "city": "San Francisco",
+    "postalCode": "94105",
+    "country": "US",
+    "phone": "+1-415-555-0123"
+  }
+}
+```
+
+Response `201 Created`:
+```json
+{
+  "order": {
+    "id": "ord_m7z0e0_abc123",
+    "status": "pending_payment",
+    "createdAt": "2026-02-25T06:10:00Z",
+    "items": [
+      {
+        "productId": "prd_2001",
+        "sku": "prd_2001_blk_m",
+        "quantity": 1
+      }
+    ],
+    "customer": {
+      "name": "Jane Doe",
+      "email": "jane@example.com",
+      "phone": "+1-415-555-0123"
+    },
+    "shipping": {
+      "recipient": "Jane Doe",
+      "address1": "123 Main St",
+      "address2": "Apt 4B",
+      "city": "San Francisco",
+      "postalCode": "94105",
+      "country": "US",
+      "phone": "+1-415-555-0123"
+    }
+  }
+}
+```
+
+Validation errors:
+- `400 INVALID_JSON` when body is not valid JSON.
+- `422 INVALID_INPUT` when `items`, `customer`, or `shipping` fields are invalid.
+
 ### POST /api/v1/orders
 Create order from current cart.
 
