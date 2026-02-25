@@ -36,6 +36,7 @@ This file is authoritative for all worker agents in this repository.
 - No placeholder lorem text in final output.
 - Add concise comments only when logic is non-obvious.
 - Provide concrete validation notes in status.
+- All git commit messages must be written in Korean.
 
 ## 7) Completion Contract
 - Worker final message must include:
