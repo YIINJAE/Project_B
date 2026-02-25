@@ -18,6 +18,7 @@
 - STARTED (2026-02-25): Scope `app.js` only. Plan: implement mobile nav toggle, reveal-on-scroll stagger, collection filtering (`ALL/OUTER/TOP/BOTTOM` via `data-category`), rotating testimonial text with progressive enhancement and null checks. Risk: HTML/CSS hooks may differ until Agent 1/2 land final markup.
 - DONE (2026-02-25): Commit `1b1a142` implemented `app.js` interactions with null-safe progressive enhancement (nav toggle, `.reveal` observer stagger, category chips filter, testimonial rotation). Verification: `node --check app.js` passes. Handoff: selectors are intentionally tolerant because final HTML hooks are pending from Agent 1/2.
 - DONE (2026-02-25): Commit `6038941` aligned nav selectors and state handling to Agent 1 hooks (`#mobile-nav-toggle`, `#primary-nav`, `data-state`). Verification: `node --check app.js` passes after update. Handoff: reveal/filter/testimonial logic remains progressive and no-ops safely when corresponding hooks are absent.
+- STARTED (2026-02-25): Issue #9 routing in `apps/web`. Plan: add Home/Shop app-router pages with valid cross-links, create custom `app/not-found.js`, and add static smoke checks in `apps/web/scripts/route-check.mjs` for route files + internal href targets. Risks: static checker can only validate literal href strings and cannot resolve dynamic route generation.
 
 ## Agent 4
 - STARTED (2026-02-25): Scope `.github/workflows/*` and `docs/*` only.

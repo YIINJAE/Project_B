@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "route:check": "node scripts/route-check.mjs",
     "typecheck": "node -e \"console.log('No TypeScript files yet: typecheck skipped')\""
   },
   "dependencies": {
