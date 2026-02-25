@@ -14,7 +14,7 @@
   <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
 
   <header id="site-header" class="site-header" data-category="global-header">
-    <div class="header-inner">
+    <div class="header-inner site-header__inner">
       <h1 class="brand" id="brand">
         <a href="#top" class="brand-link" aria-label="SHIFT DOSSIER 홈으로">SHIFT DOSSIER</a>
       </h1>
@@ -30,20 +30,20 @@
         <span class="toggle-label">메뉴</span>
       </button>
 
-      <nav id="primary-nav" class="primary-nav" aria-label="주요 메뉴" data-js="mobile-nav-panel" data-state="closed">
+      <nav id="primary-nav" class="primary-nav site-nav" aria-label="주요 메뉴" data-js="mobile-nav-panel" data-state="closed">
         <ul class="nav-list">
-          <li><a href="#hero" data-category="nav-hero">메인</a></li>
-          <li><a href="#collections" data-category="nav-collections">컬렉션</a></li>
-          <li><a href="#editorial" data-category="nav-editorial">에디토리얼</a></li>
-          <li><a href="#craftsmanship" data-category="nav-craftsmanship">크래프트</a></li>
-          <li><a href="#contact" data-category="nav-contact">컨택트</a></li>
+          <li><a href="#hero">메인</a></li>
+          <li><a href="#collections">컬렉션</a></li>
+          <li><a href="#editorial">에디토리얼</a></li>
+          <li><a href="#craftsmanship">크래프트</a></li>
+          <li><a href="#contact">컨택트</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
   <main id="main-content" class="main-content">
-    <section id="hero" class="section section-hero" data-category="hero">
+    <section id="hero" class="section section-hero hero reveal" data-reveal data-category="hero">
       <div class="section-inner hero-inner">
         <p class="eyebrow">SPRING DOSSIER 2026</p>
         <h2 class="hero-title">정제된 실루엣,
@@ -52,34 +52,40 @@
           SHIFT DOSSIER는 테일러링의 정확성과 거리의 긴장감을 결합해
           동시대 한국 여성의 리듬을 기록합니다.
         </p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#collections" data-category="hero-cta-primary">컬렉션 보기</a>
-          <a class="btn btn-secondary" href="#editorial" data-category="hero-cta-secondary">에디토리얼 읽기</a>
+        <div class="hero-actions hero__actions">
+          <a class="btn btn--primary" href="#collections" data-category="hero-cta-primary">컬렉션 보기</a>
+          <a class="btn btn--ghost" href="#editorial" data-category="hero-cta-secondary">에디토리얼 읽기</a>
         </div>
       </div>
     </section>
 
-    <section id="collections" class="section section-collections" data-category="collections">
+    <section id="collections" class="section section-collections reveal" data-reveal data-category="collections">
       <div class="section-inner">
         <header class="section-head">
           <p class="eyebrow">COLLECTIONS</p>
           <h2>밀도 있는 레이어, 선명한 태도</h2>
         </header>
+        <div class="filter-chips" role="group" aria-label="컬렉션 필터">
+          <button type="button" class="filter-chip" data-filter-chip data-category="ALL">ALL</button>
+          <button type="button" class="filter-chip" data-filter-chip data-category="OUTER">OUTER</button>
+          <button type="button" class="filter-chip" data-filter-chip data-category="TOP">TOP</button>
+          <button type="button" class="filter-chip" data-filter-chip data-category="BOTTOM">BOTTOM</button>
+        </div>
 
         <div class="collection-grid" role="list" aria-label="시즌 컬렉션">
-          <article class="collection-card" role="listitem" data-category="collection-01">
+          <article class="collection-card card" role="listitem" data-filter-item data-category="OUTER">
             <h3>01. Silent Utility</h3>
             <p>메탈 하드웨어와 소프트 울의 대비로 완성한 데일리 유니폼.</p>
             <a href="#contact" class="text-link">오더 문의</a>
           </article>
 
-          <article class="collection-card" role="listitem" data-category="collection-02">
+          <article class="collection-card card" role="listitem" data-filter-item data-category="TOP">
             <h3>02. Night Archive</h3>
             <p>야간의 도시 조도에서 착안한 블랙 톤온톤 캡슐 라인.</p>
             <a href="#contact" class="text-link">룩북 요청</a>
           </article>
 
-          <article class="collection-card" role="listitem" data-category="collection-03">
+          <article class="collection-card card" role="listitem" data-filter-item data-category="BOTTOM">
             <h3>03. Tailored Motion</h3>
             <p>움직임을 고려한 절개와 패턴으로 구성한 경량 테일러링.</p>
             <a href="#contact" class="text-link">쇼룸 예약</a>
@@ -88,7 +94,7 @@
       </div>
     </section>
 
-    <section id="editorial" class="section section-editorial" data-category="editorial">
+    <section id="editorial" class="section section-editorial reveal" data-reveal data-category="editorial">
       <div class="section-inner">
         <header class="section-head">
           <p class="eyebrow">EDITORIAL</p>
@@ -107,10 +113,15 @@
             강한 인상은 디테일의 정직함에서 나온다는 믿음을 유지합니다.
           </p>
         </article>
+        <div class="testimonial-rotator" data-testimonial-rotator data-interval="3800" aria-live="polite">
+          <blockquote data-testimonial-item>"강한 인상은 과장이 아니라 균형에서 나온다."</blockquote>
+          <blockquote data-testimonial-item>"도시의 긴장과 장인의 리듬을 한 벌에 담는다."</blockquote>
+          <blockquote data-testimonial-item>"매 시즌의 목적은 새로움보다 정확함이다."</blockquote>
+        </div>
       </div>
     </section>
 
-    <section id="craftsmanship" class="section section-craftsmanship" data-category="craftsmanship">
+    <section id="craftsmanship" class="section section-craftsmanship reveal" data-reveal data-category="craftsmanship">
       <div class="section-inner">
         <header class="section-head">
           <p class="eyebrow">CRAFTSMANSHIP</p>
@@ -134,7 +145,7 @@
       </div>
     </section>
 
-    <section id="contact" class="section section-contact" data-category="contact">
+    <section id="contact" class="section section-contact reveal" data-reveal data-category="contact">
       <div class="section-inner">
         <header class="section-head">
           <p class="eyebrow">CONTACT</p>

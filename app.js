@@ -50,7 +50,7 @@
   }
 
   function setupRevealObserver() {
-    var revealNodes = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+    var revealNodes = Array.prototype.slice.call(document.querySelectorAll('.reveal, [data-reveal]'));
     if (!revealNodes.length) return;
 
     function markVisible(element, index) {
@@ -87,30 +87,11 @@
   }
 
   function setupCategoryFilter() {
-    var allCategoryNodes = Array.prototype.slice.call(document.querySelectorAll('[data-category]'));
-    if (!allCategoryNodes.length) return;
-
-    var allowedFilters = {
-      ALL: true,
-      OUTER: true,
-      TOP: true,
-      BOTTOM: true
-    };
-
-    var chips = allCategoryNodes.filter(function (node) {
-      if (!(node instanceof HTMLElement)) return false;
-      var category = normalizeCategory(node.getAttribute('data-category'));
-      if (!allowedFilters[category]) return false;
-      return node.matches('button, [role="button"], a, input[type="button"], input[type="submit"]');
-    });
-
+    var section = document.querySelector('#collections');
+    if (!section) return;
+    var chips = Array.prototype.slice.call(section.querySelectorAll('[data-filter-chip][data-category]'));
     if (!chips.length) return;
-
-    var chipSet = new Set(chips);
-    var items = allCategoryNodes.filter(function (node) {
-      return !chipSet.has(node);
-    });
-
+    var items = Array.prototype.slice.call(section.querySelectorAll('[data-filter-item][data-category]'));
     if (!items.length) return;
 
     function applyFilter(filterName) {
