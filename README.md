@@ -13,15 +13,25 @@ This repository includes an MVP automation loop for 4 workers:
 
 ## Required Setup
 
-1. Create labels:
+1. Add secret:
+- `COORDINATOR_TOKEN` (recommended: GitHub App token or fine-grained PAT)
+
+2. Create labels:
 - `round:active`, `round:meta`, `round:task`
 - `agent:1`, `agent:2`, `agent:3`, `agent:4`
 
-2. Add secret:
-- `COORDINATOR_TOKEN` (recommended: GitHub App token or fine-grained PAT)
-
 3. Trigger coordinator:
 - Run `Round Coordinator` workflow manually once (`workflow_dispatch`)
+
+## One-Command Bootstrap (Labels + Dispatch)
+
+If you already have a token with repo/workflow permissions:
+
+```bash
+GH_TOKEN=<your_token> REPO=YIINJAE/Project_B bash scripts/bootstrap_github.sh
+```
+
+This script creates required labels (if missing) and triggers `coordinator.yml`.
 
 After that, merged PRs that include `Closes #<issue-number>` will close task issues,
 and coordinator creates the next round automatically when all 4 tasks are closed.
