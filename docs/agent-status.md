@@ -19,6 +19,7 @@
 - DONE (2026-02-25): Commit `1b1a142` implemented `app.js` interactions with null-safe progressive enhancement (nav toggle, `.reveal` observer stagger, category chips filter, testimonial rotation). Verification: `node --check app.js` passes. Handoff: selectors are intentionally tolerant because final HTML hooks are pending from Agent 1/2.
 - DONE (2026-02-25): Commit `6038941` aligned nav selectors and state handling to Agent 1 hooks (`#mobile-nav-toggle`, `#primary-nav`, `data-state`). Verification: `node --check app.js` passes after update. Handoff: reveal/filter/testimonial logic remains progressive and no-ops safely when corresponding hooks are absent.
 - STARTED (2026-02-25): Issue #8 `apps/web` Home + Shop dummy pages. Planned files: `apps/web/app/page.js`, `apps/web/app/shop/page.js`, `apps/web/app/globals.css`, `docs/agent-status.md`. Risks: keep styles minimal while still providing clear mobile/desktop product grid and category chips on both pages.
+- DONE (2026-02-25): Issue #8 commit `57dce68` created dummy Home (`app/page.js`) and Shop (`app/shop/page.js`) pages with sample product grid and category chips, plus minimal shared styles in `app/globals.css`. Verification: `node --check` passed for `app/page.js`, `app/shop/page.js`, `app/layout.js`; `git diff --check` clean; `npm run lint` failed in this environment because `next` is not installed (`sh: 1: next: not found`). Handoff: run `npm install` in `apps/web` then rerun lint/dev locally.
 
 ## Agent 4
 - STARTED (2026-02-25): Scope `.github/workflows/*` and `docs/*` only.
