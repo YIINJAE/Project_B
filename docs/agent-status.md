@@ -4,6 +4,7 @@
 - STARTED (2026-02-25): `index.html` 패션/에디토리얼 MVP 구조 작업 시작. 계획 파일: `index.html`, `docs/agent-status.md`. 리스크: 스타일/스크립트 미완성 상태에서 훅(id/class/data-category)만 선반영.
 - DONE (2026-02-25): commit `bac9c92`. 검증: hero/collections/editorial/craftsmanship/contact 섹션, 모바일 내비 토글 스켈레톤(`id=\"mobile-nav-toggle\"`, `aria-controls=\"primary-nav\"`), CSS/JS 훅(id/class/data-category) 포함 확인. 인계: 스타일/인터랙션은 Agent 2/3 연동 필요.
 - STARTED (2026-02-25): 문서화 작업(`PRD.md`, `IA.md`) 시작. 소스 기준: `docs/웹사이트 개발 구성계획서.md`, `docs/개발계획서-TODO-스케줄.md`. 리스크: 소스 문서가 현재 worktree에 없어 상위 저장소 원본을 참조해 동기화 필요.
+- DONE (2026-02-25): commit `33922d9`. 검증: `PRD.md`/`IA.md` 생성, MVP 범위/Out-of-scope/Acceptance criteria 명시, 신규 문서 ASCII 확인(비ASCII 없음). 인계: `API.md`는 아직 미작성이며 다음 주차 백로그 항목으로 진행 필요.
 
 ## Agent 2
 - STARTED 2026-02-25: owning `styles.css`. Plan: define tokenized visual system, responsive layout, and subtle motion hooks for likely HTML/JS states (`.is-open`, `.is-visible`, `[aria-expanded]`). Risks: `index.html` and `app.js` are not present in this worktree, so selectors are based on likely integration hooks.
