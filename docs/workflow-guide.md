@@ -7,6 +7,8 @@ This guide defines the Git automation flow for worker PR policy checks and main-
 - `.github/workflows/coordinator.yml`: round lifecycle coordination.
 - `.github/workflows/worker.yml`: worker task execution entrypoint.
 - `.github/workflows/pr-policy.yml`: worker PR branch/scope policy and coordinator assignment trigger stub.
+- `.github/workflows/schedule-issues.yml`: converts schedule TODO doc into GitHub issues.
+- `.github/workflows/weekly-dispatcher.yml`: dispatches open weekly issues to worker workflow.
 
 ## Branch Naming Policy
 Worker PR branches must follow:
@@ -37,6 +39,13 @@ When a non-draft worker PR passes policy:
 2. `PR Policy` validates branch and ownership scope.
 3. Main agent checks stub comment and applies coordination actions.
 4. Main agent validates output and merges when ready.
+
+## Weekly Planning Automation
+1. Update `docs/개발계획서-TODO-스케줄.md`.
+2. Trigger `Schedule To Issues` workflow (or wait for weekly schedule).
+3. Open schedule issues get labels: `todo:schedule`, `phase:mvp`, `week:n`, `agent:n`.
+4. `Weekly Dispatcher` triggers worker workflow for non-dispatched tasks.
+5. Worker PR closes issue via `Closes #<issue>`.
 
 ## Concrete Example: Agent 1 Completion Feedback
 - Completed work: Agent 1 finished `index.html` on `agent1/mvp-v2`.

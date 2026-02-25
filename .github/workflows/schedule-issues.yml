@@ -1,0 +1,24 @@
+name: Schedule To Issues
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 23 * * 0"
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  create_issues:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Create issues from schedule
+        env:
+          REPO: ${{ github.repository }}
+          GH_TOKEN: ${{ secrets.COORDINATOR_TOKEN != '' && secrets.COORDINATOR_TOKEN || github.token }}
+        run: python scripts/schedule_to_issues.py

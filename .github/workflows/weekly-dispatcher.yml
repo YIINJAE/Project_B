@@ -1,0 +1,30 @@
+name: Weekly Dispatcher
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * 1"
+  issues:
+    types: [opened, labeled]
+
+permissions:
+  contents: read
+  issues: write
+  actions: write
+
+jobs:
+  dispatch:
+    if: github.event_name != 'issues' || contains(join(github.event.issue.labels.*.name, ','), 'todo:schedule')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Dispatch weekly tasks to workers
+        env:
+          REPO: ${{ github.repository }}
+          GH_TOKEN: ${{ secrets.COORDINATOR_TOKEN != '' && secrets.COORDINATOR_TOKEN || github.token }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          WORKER_WORKFLOW: worker.yml
+        run: python scripts/weekly_dispatcher.py
